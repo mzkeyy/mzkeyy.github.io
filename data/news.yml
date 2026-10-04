@@ -1,0 +1,15 @@
+# お知らせ（日付の新しい順に表示されます）
+#   date  日付（例: 2026-10-04）
+#   text  内容
+#   url   リンク先（任意）
+
+- date: 2026-10-04
+  text: ホームページを開設しました。
+
+- date: 2026-09-04
+  text: 「ガチで限界な社畜リーマンがBでLしかける話」が完結しました。
+  url: https://ncode.syosetu.com/n5842mr/
+
+- date: 2026-09-03
+  text: 「贄の王子」が完結しました。
+  url: https://ncode.syosetu.com/n1568mr/

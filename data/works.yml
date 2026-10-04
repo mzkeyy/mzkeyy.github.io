@@ -1,0 +1,37 @@
+# 作品一覧（上に書いたものから順に表示されます）
+#
+# 書ける項目:
+#   title    タイトル（必須）
+#   status   連載中 / 完結 など
+#   length   話数・文字数など（例: 全18話）
+#   summary  あらすじ（「|」で複数行OK）
+#   tags     タグの一覧
+#   narou    小説家になろうの作品URL
+#   kakuyomu カクヨムの作品URL
+#   links    そのほかのリンク（label と url）
+
+- title: 贄の王子
+  status: 完結
+  length: 全18話
+  summary: |
+    ヴェルダニア王国第一王子のリーネ(17)は王国の儀式と執務に日々を忙殺されていた。リーネの第一従者カイ(20)は側に控えながらも、現国王に瓜二つな自分の出自を探っていく。秘匿された情報が明かされた時、二人の運命は。
+    従者×王子が運命に翻弄され行き着く先とは。
+  tags: [異世界ファンタジー, ボーイズラブ]
+  narou: https://ncode.syosetu.com/n1568mr/
+  kakuyomu: https://kakuyomu.jp/works/2912051607762891829
+
+- title: ガチで限界な社畜リーマンがBでLしかける話
+  status: 完結
+  length: 全5話
+  summary: |
+    柊の同僚の椿 × ストレスが限界突破した柊。よくある一般的な同僚の二人が、柊が欠勤を続けたことで、その関係性を変えていく。真面目な男は飄々とした男に寄りかかる。
+  tags: [現代, ボーイズラブ]
+  narou: https://ncode.syosetu.com/n5842mr/
+  kakuyomu: https://kakuyomu.jp/works/2912051607763983697
+
+- title: 家から出たくない
+  status: 完結
+  length: 短歌
+  summary: 起きたくない布団の中に閉じこもる過ぎていくのは電車の時間
+  tags: [短歌, 第2回カクヨム短歌賞 応募作]
+  kakuyomu: https://kakuyomu.jp/works/2912051607931863837

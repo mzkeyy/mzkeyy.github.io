@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- ▼ SNSシェア・検索結果に出る情報（JSでは書き換わらないので、ここを直接編集してください） -->
+  <title>田中1号 | 小説書きのホームページ</title>
+  <meta name="description" content="小説を書いています。作品一覧と公募・受賞歴、各投稿サイトへのリンクをまとめています。">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="田中1号 | 小説書きのホームページ">
+  <meta property="og:description" content="作品一覧と公募・受賞歴、各投稿サイトへのリンクをまとめています。">
+  <meta property="og:url" content="https://mzkeyy.github.io/">
+  <meta name="twitter:card" content="summary">
+  <!-- ▲ ここまで -->
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="avatar" id="avatar" aria-hidden="true"></div>
+      <div>
+        <h1 class="pen-name" id="pen-name">&nbsp;</h1>
+        <p class="tagline" id="tagline"></p>
+      </div>
+    </div>
+    <nav class="container tabs" role="tablist" aria-label="ページ切り替え">
+      <button class="tab" role="tab" id="tab-profile" aria-controls="profile" data-tab="profile">プロフィール</button>
+      <button class="tab" role="tab" id="tab-works" aria-controls="works" data-tab="works">作品</button>
+      <button class="tab" role="tab" id="tab-contests" aria-controls="contests" data-tab="contests">公募・受賞歴</button>
+      <button class="tab" role="tab" id="tab-news" aria-controls="news" data-tab="news">お知らせ</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="panel" role="tabpanel" id="profile" aria-labelledby="tab-profile" tabindex="0"></section>
+    <section class="panel" role="tabpanel" id="works" aria-labelledby="tab-works" tabindex="0" hidden></section>
+    <section class="panel" role="tabpanel" id="contests" aria-labelledby="tab-contests" tabindex="0" hidden></section>
+    <section class="panel" role="tabpanel" id="news" aria-labelledby="tab-news" tabindex="0" hidden></section>
+    <p class="load-error" id="load-error" hidden>
+      データを読み込めませんでした。ローカルで確認する場合は README の「手元で確認する」を参照してください。
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© <span id="year"></span> <span id="footer-name"></span></div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

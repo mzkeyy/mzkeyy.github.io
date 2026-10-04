@@ -1,0 +1,28 @@
+# プロフィール
+# 「#」から後ろはメモ（サイトには表示されません）
+
+name: 田中1号                     # ペンネーム
+tagline: 小説を書いています       # 名前の下に出る一言
+icon:                             # アイコン画像。例: assets/img/icon.png（空欄ならペンネームの1文字目を表示）
+
+# 自己紹介。「|」の次の行から、字下げしたまま何行でも書けます
+bio: |
+  小説家になろう・カクヨムでBL小説を連載しながら、文学賞への応募も続けています。
+  新しい作品や公募の結果はXでお知らせします。
+
+genres:                          # 書いているジャンル
+  - ボーイズラブ
+  - 異世界ファンタジー
+  - 現代ドラマ
+  - 短歌
+
+# 各サイトのURL（使わないものは空欄でOK）
+narou: https://mypage.syosetu.com/2910698/
+kakuyomu: https://kakuyomu.jp/users/tanaka_ichigou
+x: tanaka_ichigou                # Xのアカウント名（@は不要）
+
+# そのほかのリンクを足したいとき（任意）
+# links:
+#   - label: マシュマロ
+#     sub: 匿名で感想を送れます
+#     url: https://marshmallow-qa.com/example
