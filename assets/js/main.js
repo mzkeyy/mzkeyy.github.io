@@ -46,6 +46,8 @@
   const X_ICON =
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>';
 
+  let worksData = [];
+
   // ---------- render ----------
   function renderHeader(p) {
     const name = p.name || "";
@@ -71,14 +73,21 @@
     links.push(...list(p.links));
 
     document.getElementById("profile").innerHTML = `
-      <h2>自己紹介</h2>
-      <p class="bio">${esc(p.bio)}</p>
+      <section class="pf-sec">
+        <h2>自己紹介</h2>
+        <p class="bio">${esc(p.bio)}</p>
+      </section>
       ${
         genres.length
-          ? `<h2>書いているジャンル</h2>
-             <ul class="tags">${genres.map((g) => `<li class="tag">${esc(g)}</li>`).join("")}</ul>`
+          ? `<section class="pf-sec">
+               <h2>書いているジャンル</h2>
+               <ul class="tags">${genres
+                 .map((g) => `<li><a class="tag tag-link" href="#works" data-genre="${esc(g)}">${esc(g)}</a></li>`)
+                 .join("")}</ul>
+             </section>`
           : ""
       }
+      <section class="pf-sec">
       <h2>リンク</h2>
       <ul class="link-list">
         ${links
@@ -90,23 +99,50 @@
           </a></li>`
           )
           .join("")}
-      </ul>`;
+      </ul>
+      </section>`;
+
+    // ジャンルをクリック → そのジャンルの作品だけを作品タブに表示
+    document.getElementById("profile").addEventListener("click", (e) => {
+      const a = e.target.closest(".tag-link");
+      if (!a) return;
+      e.preventDefault();
+      filterWorks(a.dataset.genre);
+      history.replaceState(null, "", "#works");
+      showTab("works");
+      window.scrollTo({ top: 0 });
+    });
   }
 
-  function renderWorks(works) {
+  function renderWorks(works, genres) {
+    worksData = works;
+    // 作品が1つ以上あるジャンルだけボタンにする
+    const usedGenres = genres.map(String).filter((g) => works.some((w) => list(w.tags).map(String).includes(g)));
     const el = document.getElementById("works");
     if (!works.length) {
       el.innerHTML = '<p class="empty">作品はまだ登録されていません。</p>';
       return;
     }
     el.innerHTML = `
+      <div class="works-head"><h2>作品</h2><span class="muted works-count">${works.length}作品</span></div>
+      ${
+        usedGenres.length
+          ? `<div class="filters work-filters" role="group" aria-label="ジャンルで絞り込み">
+               <button type="button" class="filter" data-genre="" aria-pressed="true">すべて</button>
+               ${usedGenres
+                 .map((g) => `<button type="button" class="filter" data-genre="${esc(g)}" aria-pressed="false">${esc(g)}</button>`)
+                 .join("")}
+             </div>`
+          : ""
+      }
+      <p class="empty works-none" hidden>このジャンルの作品はまだありません。</p>
       <ul class="work-list">
         ${works
           .map((w) => {
             const meta = [w.status, w.length].filter(Boolean).join(" ・ ");
             const btns = [];
             if (w.narou) btns.push(`<a class="btn btn-primary" ${ext(w.narou)}>${SITE_LABELS.narou}で読む</a>`);
-            if (w.kakuyomu) btns.push(`<a class="btn btn-primary" ${ext(w.kakuyomu)}>${SITE_LABELS.kakuyomu}で読む</a>`);
+            if (w.kakuyomu) btns.push(`<a class="btn" ${ext(w.kakuyomu)}>${SITE_LABELS.kakuyomu}で読む</a>`);
             list(w.links).forEach((l) => btns.push(`<a class="btn" ${ext(l.url)}>${esc(l.label)}</a>`));
             return `
             <li class="work">
@@ -114,7 +150,7 @@
                 <h3 class="work-title">${esc(w.title)}</h3>
                 ${meta ? `<span class="work-meta">${esc(meta)}</span>` : ""}
               </div>
-              ${w.summary ? `<p class="work-summary">${esc(w.summary)}</p>` : ""}
+              ${w.summary ? `<p class="work-summary${list(w.tags).includes("短歌") ? " tanka" : ""}">${esc(w.summary)}</p>` : ""}
               ${
                 list(w.tags).length
                   ? `<ul class="tags">${list(w.tags).map((t) => `<li class="tag">${esc(t)}</li>`).join("")}</ul>`
@@ -125,6 +161,29 @@
           })
           .join("")}
       </ul>`;
+
+    el.querySelector(".work-filters")?.addEventListener("click", (e) => {
+      const btn = e.target.closest(".filter");
+      if (btn) filterWorks(btn.dataset.genre || null);
+    });
+  }
+
+  // genre が null ならすべて表示
+  function filterWorks(genre) {
+    const el = document.getElementById("works");
+    const items = el.querySelectorAll(".work");
+    if (!items.length) return;
+    let shown = 0;
+    items.forEach((li, i) => {
+      const hit = !genre || list(worksData[i].tags).map(String).includes(genre);
+      li.hidden = !hit;
+      if (hit) shown++;
+    });
+    el.querySelector(".works-count").textContent = `${shown}作品`;
+    el.querySelectorAll(".work-filters .filter").forEach((b) =>
+      b.setAttribute("aria-pressed", String((b.dataset.genre || null) === genre))
+    );
+    el.querySelector(".works-none").hidden = shown > 0;
   }
 
   function renderContests(contests) {
@@ -141,6 +200,7 @@
     const present = Object.keys(KIND_LABELS).filter((k) => count([k]) > 0);
 
     el.innerHTML = `
+      <h2>公募・受賞歴</h2>
       <div class="stats">
         <div class="stat"><div class="stat-num">${items.length}</div><div class="stat-label">応募</div></div>
         <div class="stat"><div class="stat-num">${count(["pass", "final", "win"])}</div><div class="stat-label">選考通過以上</div></div>
@@ -158,7 +218,7 @@
             <div class="contest-date">${esc(c.date.replace(/-/g, "."))}</div>
             <div>
               <div class="contest-name">${esc(c.contest)}</div>
-              ${c.work ? `<div class="contest-work">応募作：${esc(c.work)}</div>` : ""}
+              ${c.work ? `<div class="contest-work">応募作：<b>${esc(c.work)}</b></div>` : ""}
               ${c.note ? `<div class="contest-note">${esc(c.note)}</div>` : ""}
             </div>
             <span class="badge badge-${c.kind}">${esc(c.result || "結果待ち")}</span>
@@ -184,9 +244,9 @@
       .sort((a, b) => b.date.localeCompare(a.date));
 
     const xCard = profile.x
-      ? `<h2>X（旧Twitter）</h2>
-         <div class="x-card">
+      ? `<div class="x-card">
            <div>
+             <h2>X（旧Twitter）</h2>
              <div><strong>@${esc(profile.x)}</strong></div>
              <div class="muted">更新のお知らせや近況を投稿しています</div>
            </div>
@@ -233,6 +293,7 @@
     nav.addEventListener("click", (e) => {
       const b = e.target.closest(".tab");
       if (!b) return;
+      if (b.dataset.tab === "works") filterWorks(null);
       history.replaceState(null, "", `#${b.dataset.tab}`);
       showTab(b.dataset.tab);
       window.scrollTo({ top: 0 });
@@ -268,7 +329,7 @@
       const p = profile || {};
       renderHeader(p);
       renderProfile(p);
-      renderWorks(list(works));
+      renderWorks(list(works), list(p.genres));
       renderContests(list(contests));
       renderNews(list(news), p);
     } catch (err) {

@@ -5,7 +5,8 @@
 #   status   連載中 / 完結 など
 #   length   話数・文字数など（例: 全18話）
 #   summary  あらすじ（「|」で複数行OK）
-#   tags     タグの一覧
+#   tags     タグの一覧（profile.yml の genres と同じ言葉を入れると、
+#            プロフィールのジャンルから絞り込めます）
 #   narou    小説家になろうの作品URL
 #   kakuyomu カクヨムの作品URL
 #   links    そのほかのリンク（label と url）
@@ -25,7 +26,7 @@
   length: 全5話
   summary: |
     柊の同僚の椿 × ストレスが限界突破した柊。よくある一般的な同僚の二人が、柊が欠勤を続けたことで、その関係性を変えていく。真面目な男は飄々とした男に寄りかかる。
-  tags: [現代, ボーイズラブ]
+  tags: [現代ドラマ, ボーイズラブ]
   narou: https://ncode.syosetu.com/n5842mr/
   kakuyomu: https://kakuyomu.jp/works/2912051607763983697
 
